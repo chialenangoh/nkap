@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: 'How Nkap ranks money-transfer services | Nkap',
   description:
     'How Nkap compares fees and exchange rates, where its numbers come from, and why rankings are always by what the receiver gets — never by referral earnings.',
+  alternates: { canonical: '/how-it-works' },
 }
 
 export default function HowItWorksPage() {

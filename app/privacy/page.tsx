@@ -6,6 +6,7 @@ import { SITE } from '@/lib/nkap/site'
 export const metadata: Metadata = {
   title: 'Privacy Policy | Nkap',
   description: 'How Nkap handles information — a comparison site with no accounts and no money handling.',
+  alternates: { canonical: '/privacy' },
 }
 
 const LAST_UPDATED = 'November 13, 2026'

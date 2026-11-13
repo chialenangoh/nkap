@@ -17,6 +17,7 @@ import { SITE } from '@/lib/nkap/site'
 export const metadata: Metadata = {
   title: 'Nkap — Compare what your family actually receives | Money in America',
   description: SITE.description,
+  alternates: { canonical: '/' },
 }
 
 export default function HomePage() {

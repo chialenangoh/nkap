@@ -249,7 +249,7 @@ export const PROVIDERS: Provider[] = [
         status: 'verified',
         checkedDate: '2026-11-13',
         source: NOV13_SOURCE,
-        note: 'Wise’s own compare page (live 2026-11-13, wise.com/us/compare/?sendAmount=500&sourceCurrency=USD&targetCurrency=NGN): $500 send → rate 1,403.71, total fees $4.40, recipient gets 695,678.68 NGN; a $26,995 send the same day showed fees of $142.24. Fee modeled as $1.80 + 0.52%, which reproduces the $500 fee exactly. Wise deducts its fee from the amount sent in reality; Nkap shows fees on top, the same convention used for every provider here.',
+        note: 'Wise’s own compare page (live 2026-11-13, wise.com/us/compare/?sendAmount=500&sourceCurrency=USD&targetCurrency=NGN): $500 send → rate 1,403.71, total fees $4.40, recipient gets 695,678.68 NGN; a $26,995 send the same day showed fees of $142.24. Fee modeled as $1.80 + 0.52%, which reproduces the $500 fee exactly. Wise deducts its fee from the amount sent before converting, so Wise’s own page shows the smaller recipient figure quoted above; Nkap’s table instead converts the full amount you enter and counts the fee in the Total cost column — one convention for every provider, so all services compare on an equal basis. That is why the table’s Wise figure is higher than the one on Wise’s page.',
       },
       ghana: {
         feeUsd: 0,
@@ -258,7 +258,7 @@ export const PROVIDERS: Provider[] = [
         status: 'verified',
         checkedDate: '2026-11-13',
         source: NOV13_SOURCE,
-        note: 'Wise’s own compare page (live 2026-11-13, wise.com/us/compare/wise-usd-to-ghs): $1,000 send → rate 11.7195, total fees $13.78, recipient gets 11,558.01 GHS. Fee modeled as 1.378% from that quote (Wise’s only published fee point for this corridor). Wise deducts its fee from the amount sent in reality; Nkap shows fees on top, the same convention used for every provider here.',
+        note: 'Wise’s own compare page (live 2026-11-13, wise.com/us/compare/wise-usd-to-ghs): $1,000 send → rate 11.7195, total fees $13.78, recipient gets 11,558.01 GHS. Fee modeled as 1.378% from that quote (Wise’s only published fee point for this corridor). Wise deducts its fee from the amount sent before converting, so Wise’s own page shows the smaller recipient figure quoted above; Nkap’s table instead converts the full amount you enter and counts the fee in the Total cost column — one convention for every provider, so all services compare on an equal basis. That is why the table’s Wise figure is higher than the one on Wise’s page.',
       },
       kenya: {
         feeUsd: 0,
@@ -267,7 +267,7 @@ export const PROVIDERS: Provider[] = [
         status: 'verified',
         checkedDate: '2026-11-13',
         source: NOV13_SOURCE,
-        note: 'Wise’s own compare page (live 2026-11-13, wise.com/us/compare/western-union-usd-to-kes): $1,000 send → rate 130.05, total fees $13.41, recipient gets 128,306 KES. Fee modeled as 1.341% from that quote (Wise’s only published fee point for this corridor). Wise deducts its fee from the amount sent in reality; Nkap shows fees on top, the same convention used for every provider here.',
+        note: 'Wise’s own compare page (live 2026-11-13, wise.com/us/compare/western-union-usd-to-kes): $1,000 send → rate 130.05, total fees $13.41, recipient gets 128,306 KES. Fee modeled as 1.341% from that quote (Wise’s only published fee point for this corridor). Wise deducts its fee from the amount sent before converting, so Wise’s own page shows the smaller recipient figure quoted above; Nkap’s table instead converts the full amount you enter and counts the fee in the Total cost column — one convention for every provider, so all services compare on an equal basis. That is why the table’s Wise figure is higher than the one on Wise’s page.',
       },
     },
   },

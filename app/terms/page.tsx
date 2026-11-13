@@ -6,6 +6,7 @@ import { SITE } from '@/lib/nkap/site'
 export const metadata: Metadata = {
   title: 'Terms of Service | Nkap',
   description: 'The terms that govern your use of Nkap, the Money in America comparison tool.',
+  alternates: { canonical: '/terms' },
 }
 
 const LAST_UPDATED = 'November 13, 2026'
