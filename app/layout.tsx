@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
 import Script from 'next/script'
 import { SITE } from '@/lib/nkap/site'
+import { AuthProvider } from '@/lib/nkap/auth-context'
 import './globals.css'
 
 const SITE_URL = 'https://freenkap.com'
@@ -78,7 +79,7 @@ export default function RootLayout({
       className={`dark bg-background ${inter.variable} ${spaceGrotesk.variable}`}
     >
       <body className="font-sans antialiased">
-        {children}
+        <AuthProvider>{children}</AuthProvider>
         {GA_ID && (
           <>
             <Script

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Coins, CirclePlay } from 'lucide-react'
 import { CORRIDORS } from '@/lib/nkap/rates'
 import { SITE } from '@/lib/nkap/site'
+import { AccountMenu } from './account-menu'
 
 export function SiteHeader() {
   return (
@@ -49,6 +50,7 @@ export function SiteHeader() {
             <CirclePlay className="h-4 w-4" />
             {SITE.channelHandle}
           </a>
+          <AccountMenu />
         </div>
       </div>
     </header>

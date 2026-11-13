@@ -5,7 +5,7 @@ import { SITE } from '@/lib/nkap/site'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | Nkap',
-  description: 'How Nkap handles information — a comparison site with no accounts and no money handling.',
+  description: 'How Nkap handles information — optional accounts with verified emails, and we never handle your money.',
   alternates: { canonical: '/privacy' },
 }
 
@@ -48,16 +48,18 @@ export default function PrivacyPolicyPage() {
           <Section title="The short version">
             <p>
               Nkap is a comparison website from the {SITE.channelName} YouTube
-              channel. There are no Nkap accounts, no sign-up, and we never
-              handle your money. You can use every part of this site without
-              giving us your name, email address, or payment details.
+              channel, and we never handle your money. You can use the whole
+              comparison without an account. If you choose to create one, we
+              store your email address with our secure sign-in provider so
+              you can sign in — see “Accounts” below.
             </p>
           </Section>
 
           <Section title="What we collect">
             <p>
-              We do not ask for or store personal information on this site.
-              Like almost every website, our hosting provider automatically
+              Outside of the optional account and the optional rate-alert
+              signup, we do not ask for or store personal information on
+              this site. Like almost every website, our hosting provider automatically
               processes standard technical information when your browser loads
               a page — for example your IP address, browser type, and the page
               requested — in server logs used to operate and secure the site.
@@ -66,6 +68,20 @@ export default function PrivacyPolicyPage() {
             <p>
               The comparison calculator runs entirely in your browser. The
               amounts and destinations you enter are never sent to us.
+            </p>
+          </Section>
+
+          <Section title="Accounts">
+            <p>
+              Creating an account is optional. Accounts are provided by
+              Google Firebase Authentication. When you sign up, Firebase
+              stores your email address and a securely hashed version of
+              your password — Nkap never sees or stores your password itself.
+              Firebase sends the email-verification and password-reset
+              messages for us. Signing in keeps a session token in your
+              browser so you stay signed in on this device; signing out
+              clears it. You can ask us to delete your account and its email
+              address at any time via the contact email in the footer.
             </p>
           </Section>
 
