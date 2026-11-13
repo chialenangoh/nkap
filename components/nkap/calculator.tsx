@@ -17,9 +17,22 @@ import {
   type Provider,
   type UnavailableQuote,
 } from '@/lib/nkap/rates'
+import { RateAlertSignup } from '@/components/nkap/rate-alert-signup'
+import { ShareButtons } from '@/components/nkap/share-buttons'
+import { trackProviderClick } from '@/lib/nkap/analytics'
 import { cn } from '@/lib/utils'
 
 const QUICK_AMOUNTS = [100, 200, 500, 1000]
+
+/** "2026-11-13" → "13 Nov 2026" */
+function shortDate(iso: string): string {
+  return new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  })
+}
 
 export function Calculator({
   defaultCorridor = 'cameroon',
@@ -40,8 +53,21 @@ export function Calculator({
   const verifiedDate = lastVerifiedDate(corridor)
   const hasSeeds = corridorHasSeeds(corridor)
   const unavailable = useMemo(() => unavailableIn(corridor), [corridor])
-  const best = rows[0]
-  const worst = rows[rows.length - 1]
+  // TRUST RULE: preview (seed) rows NEVER rank above a verified row, never
+  // take the "Most received" tag, and never enter the best-vs-worst gap.
+  // Seeds render after all verified rows, in their own receiver-gets order.
+  const verifiedRows = rows.filter((r) => r.quote.status === 'verified')
+  const seedRows = rows.filter((r) => r.quote.status === 'seed')
+  const best = verifiedRows[0]
+  const worst = verifiedRows[verifiedRows.length - 1]
+  const ratesStale = verifiedDate
+    ? Date.now() - new Date(`${verifiedDate}T12:00:00Z`).getTime() >
+      7 * 24 * 60 * 60 * 1000
+    : false
+  const shareUrl = `https://freenkap.com/send-money-to-${corridor.slug}`
+  const shareText = best
+    ? `Sending ${formatUsd(amount)} to ${corridor.country}? The best verified service delivers ${formatLocal(best.receiverGets, corridor.currencyCode)}. Compare what your family actually receives:`
+    : `Compare what your family actually receives when you send money to ${corridor.country} — fee and exchange rate included:`
 
   return (
     <section id="compare" className="scroll-mt-24">
@@ -123,6 +149,23 @@ export function Calculator({
           </span>
         </p>
 
+        {verifiedDate &&
+          (ratesStale ? (
+            <p className="mt-3 flex items-start gap-2 rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-xs font-medium leading-relaxed text-amber-700 dark:text-amber-300">
+              <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+              <span>
+                Rates may have changed — last checked {shortDate(verifiedDate)}
+                . Always confirm the final amount in the provider’s own app
+                before you send.
+              </span>
+            </p>
+          ) : (
+            <p className="mt-3 text-xs text-muted-foreground">
+              Rates last checked {shortDate(verifiedDate)} on each provider’s
+              own pages.
+            </p>
+          ))}
+
         {hasSeeds && (
           <p className="mt-3 flex items-start gap-2 rounded-lg border border-dashed border-border bg-background px-3 py-2 text-xs leading-relaxed text-muted-foreground">
             <FlaskConical className="mt-0.5 h-3.5 w-3.5 shrink-0" />
@@ -136,6 +179,15 @@ export function Calculator({
               . Always confirm the final amount in the provider’s app before
               you send.
             </span>
+          </p>
+        )}
+
+        {amount > 0 && verifiedRows.length === 0 && (
+          <p className="mt-5 rounded-lg border border-dashed border-border bg-background px-4 py-3 text-sm leading-relaxed text-muted-foreground">
+            No verified rates for {corridor.country} yet — we’re still
+            checking each provider’s own pages. The only figures available
+            right now are the preview estimates below; treat them as rough
+            guides, not quotes.
           </p>
         )}
 
@@ -155,14 +207,39 @@ export function Calculator({
                 </tr>
               </thead>
               <tbody>
-                {rows.map((row, i) => (
-                  <ResultRow key={row.provider.id} row={row} rank={i} corridor={corridor} />
+                {verifiedRows.map((row, i) => (
+                  <ResultRow
+                    key={row.provider.id}
+                    row={row}
+                    isBest={i === 0}
+                    corridor={corridor}
+                  />
+                ))}
+                {seedRows.length > 0 && (
+                  <tr className="border-b border-border bg-background">
+                    <td
+                      colSpan={6}
+                      className="py-2 pr-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+                    >
+                      Preview rates — estimates, not yet verified · never
+                      ranked above verified rates
+                    </td>
+                  </tr>
+                )}
+                {seedRows.map((row) => (
+                  <ResultRow
+                    key={row.provider.id}
+                    row={row}
+                    isBest={false}
+                    corridor={corridor}
+                  />
                 ))}
                 {unavailable.map(({ provider, quote }) => (
                   <UnavailableRow
                     key={provider.id}
                     provider={provider}
                     quote={quote}
+                    corridor={corridor}
                   />
                 ))}
               </tbody>
@@ -174,9 +251,10 @@ export function Calculator({
           </p>
         )}
 
-        {best && worst && rows.length > 1 && (
+        {best && worst && verifiedRows.length > 1 && (
           <p className="mt-4 rounded-lg bg-primary/10 px-4 py-3 text-sm leading-relaxed text-foreground">
-            On {formatUsd(amount)}, the best and worst options above differ by{' '}
+            On {formatUsd(amount)}, the best and worst verified options above
+            differ by{' '}
             <strong>
               {formatLocal(
                 best.receiverGets - worst.receiverGets,
@@ -188,6 +266,12 @@ export function Calculator({
             send.
           </p>
         )}
+
+        <div className="mt-6">
+          <ShareButtons url={shareUrl} text={shareText} />
+        </div>
+
+        <RateAlertSignup corridor={corridor} />
       </div>
     </section>
   )
@@ -195,16 +279,15 @@ export function Calculator({
 
 function ResultRow({
   row,
-  rank,
+  isBest,
   corridor,
 }: {
   row: ComparisonRow
-  rank: number
+  isBest: boolean
   corridor: ReturnType<typeof getCorridor>
 }) {
   const [copied, setCopied] = useState(false)
   const { provider, quote } = row
-  const isBest = rank === 0
 
   const copyCode = async () => {
     if (!provider.referral) return
@@ -245,7 +328,7 @@ function ResultRow({
               </span>
             ) : (
               <span className="font-medium text-foreground/70">
-                Preview rate
+                Preview rate — estimate, not yet verified
                 {quote.checkedDate
                   ? ` · last seen ${formatDate(quote.checkedDate)}`
                   : ''}
@@ -301,6 +384,7 @@ function ResultRow({
             href={provider.href}
             target="_blank"
             rel="noreferrer"
+            onClick={() => trackProviderClick(provider.id, corridor.slug)}
             className="inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90"
           >
             Visit <ArrowRight className="h-3.5 w-3.5" />
@@ -343,9 +427,11 @@ function ResultRow({
 function UnavailableRow({
   provider,
   quote,
+  corridor,
 }: {
   provider: Provider
   quote: UnavailableQuote
+  corridor: ReturnType<typeof getCorridor>
 }) {
   return (
     <tr className="border-b border-border align-top opacity-75">
@@ -369,6 +455,7 @@ function UnavailableRow({
           href={provider.href}
           target="_blank"
           rel="noreferrer"
+          onClick={() => trackProviderClick(provider.id, corridor.slug)}
           className="inline-flex items-center gap-1 rounded-lg border border-border px-3 py-2 text-xs font-semibold text-foreground transition-colors hover:border-primary"
         >
           Visit <ArrowRight className="h-3.5 w-3.5" />
