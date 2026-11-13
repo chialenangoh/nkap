@@ -1,0 +1,27 @@
+# Nkap — Render Blueprint (PREP ONLY — nothing has been deployed yet)
+#
+# Creating a service from this file (Render Dashboard → New → Blueprint, or
+# connecting the Git repo that hosts this app) creates a web service NAMED
+# "nkap", which Render serves at:
+#
+#     https://nkap.onrender.com
+#
+# Custom domain (later, when Chiale approves): in the service's Settings →
+# Custom Domains, add:
+#
+#     nkap.kingdomtube.company
+#
+# then, at the registrar for kingdomtube.company (Name.com), add a CNAME
+# record:  host "nkap"  →  nkap.onrender.com
+# Render provisions the TLS certificate automatically once DNS resolves.
+
+services:
+  - type: web
+    name: nkap
+    runtime: node
+    plan: starter
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: '20'
