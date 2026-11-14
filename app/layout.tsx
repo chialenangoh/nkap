@@ -56,6 +56,11 @@ export const metadata: Metadata = {
     description: SITE.description,
     images: ['/og.png'],
   },
+  other: {
+    // Impact.com domain verification for the Xe Money Transfer affiliate
+    // program (account "Money in America", Nov 13, 2026).
+    'impact-site-verification': '62b0befc-5628-4f40-ac18-d95fddf7efb8',
+  },
 }
 
 export const viewport: Viewport = {
@@ -80,6 +85,16 @@ export default function RootLayout({
       className={`light bg-background ${inter.variable} ${spaceGrotesk.variable}`}
     >
       <body className="font-sans antialiased">
+        {/* Impact's verifier looks for its non-standard `value` attribute;
+            React 19 hoists this meta tag into <head>. The Metadata API
+            `other` entry above renders the standard `content` form too. */}
+        <meta
+          name="impact-site-verification"
+          content="62b0befc-5628-4f40-ac18-d95fddf7efb8"
+          {...({
+            value: '62b0befc-5628-4f40-ac18-d95fddf7efb8',
+          } as React.MetaHTMLAttributes<HTMLMetaElement>)}
+        />
         <AuthProvider>{children}</AuthProvider>
         {GA_ID && (
           <>
