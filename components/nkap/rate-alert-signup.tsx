@@ -53,7 +53,7 @@ export function RateAlertSignup({ corridor }: { corridor: Corridor }) {
   }
 
   return (
-    <div className="mt-6 border-t border-border pt-5">
+    <div id="rate-alerts" className="mt-6 scroll-mt-24 border-t border-border pt-5">
       <p className="flex items-center gap-2 font-heading text-base font-bold text-foreground">
         <BellRing className="h-4.5 w-4.5 text-primary" />
         Get an email when the best rate to {selected.country} improves
