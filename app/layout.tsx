@@ -60,6 +60,8 @@ export const metadata: Metadata = {
     // Impact.com domain verification for the Xe Money Transfer affiliate
     // program (account "Money in America", Nov 13, 2026).
     'impact-site-verification': '62b0befc-5628-4f40-ac18-d95fddf7efb8',
+    // FlexOffers publisher signup domain verification (Nov 14, 2026).
+    'fo-verify': '65589d07-5678-45c6-a447-fbc2fdfb4d0c',
   },
 }
 
