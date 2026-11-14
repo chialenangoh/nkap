@@ -32,7 +32,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   manifest: '/manifest.json',
   icons: {
-    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
+    icon: [{ url: '/icon.png', type: 'image/png', sizes: '512x512' }],
+    apple: [{ url: '/apple-icon.png', type: 'image/png' }],
   },
   openGraph: {
     title: OG_TITLE,

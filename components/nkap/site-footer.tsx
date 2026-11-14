@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Coins, CirclePlay } from 'lucide-react'
+import { CirclePlay } from 'lucide-react'
 import { CORRIDORS } from '@/lib/nkap/rates'
 import { AFFILIATE_DISCLOSURE, EDUCATION_NOTICE, SITE } from '@/lib/nkap/site'
 import { BottomNav } from './bottom-nav'
@@ -15,14 +15,14 @@ export function SiteFooter() {
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <div className="grid gap-8 md:grid-cols-[1.2fr_1fr_1fr]">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <Coins className="h-4 w-4" />
-              </span>
-              <span className="font-heading text-base font-bold text-foreground">
-                {SITE.name}
-              </span>
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo.png"
+              alt={SITE.name}
+              width={1000}
+              height={298}
+              className="h-9 w-auto"
+            />
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
               {SITE.tagline} A free comparison tool from the{' '}
               {SITE.channelName} YouTube channel — made for families who send

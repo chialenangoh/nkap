@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Coins, CirclePlay } from 'lucide-react'
+import { CirclePlay } from 'lucide-react'
 import { CORRIDORS } from '@/lib/nkap/rates'
 import { SITE } from '@/lib/nkap/site'
 import { AccountMenu } from './account-menu'
@@ -8,17 +8,17 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3 sm:px-6">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <Coins className="h-5 w-5" />
-          </span>
-          <span className="leading-tight">
-            <span className="block font-heading text-lg font-bold tracking-tight text-foreground">
-              {SITE.name}
-            </span>
-            <span className="block text-[11px] text-muted-foreground">
-              by {SITE.channelName}
-            </span>
+        <Link href="/" className="flex flex-col justify-center" aria-label={`${SITE.name} — home`}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo.png"
+            alt={SITE.name}
+            width={1000}
+            height={298}
+            className="h-10 w-auto sm:h-11"
+          />
+          <span className="mt-0.5 text-[11px] leading-none text-muted-foreground">
+            by {SITE.channelName}
           </span>
         </Link>
 
