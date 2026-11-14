@@ -9,6 +9,9 @@ import {
   CirclePlay,
 } from 'lucide-react'
 import { Calculator } from '@/components/nkap/calculator'
+import { WelcomeBar } from '@/components/nkap/welcome-bar'
+import { SecurityBanner } from '@/components/nkap/security-banner'
+import { RewardsCard } from '@/components/nkap/rewards-card'
 import { SiteHeader } from '@/components/nkap/site-header'
 import { SiteFooter } from '@/components/nkap/site-footer'
 import { CORRIDORS } from '@/lib/nkap/rates'
@@ -26,15 +29,17 @@ export default function HomePage() {
       <SiteHeader />
       <main>
         {/* Hero + calculator */}
-        <section className="mx-auto max-w-6xl px-4 pb-14 pt-12 sm:px-6 sm:pt-16">
-          <div className="mx-auto max-w-3xl text-center">
-            <h1 className="font-heading text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl">
-              Sending money home?
-              <br />
-              Check what they’ll{' '}
+        <section className="mx-auto max-w-6xl px-4 pb-14 pt-6 sm:px-6 sm:pt-10">
+          <div className="mx-auto max-w-4xl">
+            <WelcomeBar />
+            <div className="mt-5">
+              <SecurityBanner />
+            </div>
+            <h1 className="mt-8 font-heading text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
+              Sending money home? Check what they’ll{' '}
               <span className="text-primary">actually receive.</span>
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
               “No fee” does not mean no cost. Every service takes its cut in two
               places — the fee you see, and the exchange rate you don’t. Nkap
               compares them all on the one number that matters: what lands in
@@ -42,8 +47,12 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="mx-auto mt-10 max-w-4xl">
+          <div className="mx-auto mt-8 max-w-4xl">
             <Calculator defaultCorridor="cameroon" defaultAmount={500} />
+          </div>
+
+          <div className="mx-auto mt-6 max-w-4xl">
+            <RewardsCard />
           </div>
         </section>
 

@@ -17,6 +17,7 @@ import {
   type User,
 } from 'firebase/auth'
 import { getFirebaseAuth, VERIFY_CONTINUE_URL } from './firebase'
+import { markUnlocked } from './device-lock'
 
 type AuthContextValue = {
   user: User | null
@@ -82,11 +83,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     async signUp(email, password) {
       if (!auth) throw new Error('not-configured')
       const cred = await createUserWithEmailAndPassword(auth, email, password)
+      // A fresh password sign-in proves identity — the device lock (PIN /
+      // Face ID) must not demand a second step in the same session.
+      markUnlocked(cred.user.uid)
       await sendEmailVerification(cred.user, { url: VERIFY_CONTINUE_URL })
     },
     async signIn(email, password) {
       if (!auth) throw new Error('not-configured')
-      await signInWithEmailAndPassword(auth, email, password)
+      const cred = await signInWithEmailAndPassword(auth, email, password)
+      markUnlocked(cred.user.uid)
     },
     async signOutUser() {
       if (!auth) return

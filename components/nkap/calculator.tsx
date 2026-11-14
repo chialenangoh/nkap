@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { ArrowRight, BadgeCheck, Copy, FlaskConical, Info, Trophy } from 'lucide-react'
+import { ArrowRight, ArrowUpDown, BadgeCheck, Copy, FlaskConical, Info, Trophy } from 'lucide-react'
 import {
   CORRIDORS,
   compare,
@@ -71,21 +71,21 @@ export function Calculator({
 
   return (
     <section id="compare" className="scroll-mt-24">
-      <div className="rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-7">
+      <div className="rounded-[2rem] border border-border/60 bg-card p-5 shadow-xl sm:p-7">
         <div className="grid gap-4 sm:grid-cols-[1fr_1.4fr]">
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium text-foreground">
-              You send (USD)
+              You Send · USD
             </span>
             <div className="relative">
-              <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+              <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-xl text-muted-foreground">
                 $
               </span>
               <input
                 inputMode="decimal"
                 value={amountText}
                 onChange={(e) => setAmountText(e.target.value)}
-                className="w-full rounded-lg border border-input bg-background py-2.5 pl-7 pr-3 text-lg font-semibold text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/30"
+                className="w-full rounded-2xl border border-input bg-background py-3 pl-8 pr-3 font-heading text-3xl font-bold text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/30"
                 aria-label="Amount in US dollars"
               />
             </div>
@@ -135,6 +135,78 @@ export function Calculator({
             </div>
           </label>
         </div>
+
+        {amount > 0 && (
+          <div className="mt-7">
+            <div className="relative flex items-center justify-center">
+              <span
+                aria-hidden
+                className="absolute inset-x-0 top-1/2 border-t-2 border-dashed border-primary/25"
+              />
+              <span className="relative inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-2 text-sm font-bold text-primary shadow-sm">
+                <ArrowUpDown className="h-4 w-4" />
+                1 USD ={' '}
+                {formatRate(
+                  best ? best.quote.ratePerUsd : corridor.midMarketRate,
+                )}{' '}
+                {corridor.currencyCode}
+                {best ? (
+                  <span className="font-semibold text-muted-foreground">
+                    · best via {best.provider.name}
+                  </span>
+                ) : (
+                  <span className="font-semibold text-muted-foreground">
+                    · market reference
+                  </span>
+                )}
+              </span>
+            </div>
+
+            <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Recipient Gets
+                  {best ? (
+                    <span className="text-foreground">
+                      {' '}
+                      · best with {best.provider.name}
+                    </span>
+                  ) : null}
+                </p>
+                <p className="mt-1 font-heading text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                  {best
+                    ? formatLocal(best.receiverGets, corridor.currencyCode)
+                    : '—'}
+                </p>
+                {best && best.quote.status === 'verified' && (
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Fee {best.feeUsd <= 0.005 ? '$0' : formatUsd(best.feeUsd)}{' '}
+                    · total cost ≈ {formatUsd(best.totalCostUsd)} — full
+                    ranking below
+                  </p>
+                )}
+              </div>
+              {best && (
+                <a
+                  href={best.provider.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() =>
+                    trackProviderClick(best.provider.id, corridor.slug)
+                  }
+                  className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 font-heading text-base font-bold text-primary-foreground shadow-lg transition-opacity hover:opacity-90"
+                >
+                  Send with {best.provider.name}
+                  <ArrowRight className="h-5 w-5" />
+                </a>
+              )}
+            </div>
+            <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+              You finish on the provider’s own site — Nkap compares, it never
+              touches your money.
+            </p>
+          </div>
+        )}
 
         <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
           <Info className="h-3.5 w-3.5 shrink-0" />

@@ -12,6 +12,8 @@ import {
 } from 'lucide-react'
 import { useAuth, authErrorMessage } from '@/lib/nkap/auth-context'
 import { CORRIDORS } from '@/lib/nkap/rates'
+import { LockGate } from './lock-gate'
+import { SecuritySettings } from './security-settings'
 
 function formatDate(value: string | undefined): string | null {
   if (!value) return null
@@ -91,8 +93,9 @@ export function AccountPageContent() {
   }
 
   return (
+    <LockGate uid={user.uid} email={user.email ?? ''}>
     <div className="space-y-6">
-      <div className="rounded-xl border border-border bg-card p-6">
+      <div className="rounded-3xl border border-border bg-card p-6">
         <div className="flex items-center gap-4">
           <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary font-heading text-2xl font-bold text-primary-foreground">
             {(user.email?.charAt(0) || 'N').toUpperCase()}
@@ -176,7 +179,7 @@ export function AccountPageContent() {
         </div>
       </div>
 
-      <div className="rounded-xl border border-border bg-card p-6">
+      <div className="rounded-3xl border border-border bg-card p-6">
         <h2 className="font-heading text-lg font-bold text-foreground">
           Quick links
         </h2>
@@ -203,6 +206,9 @@ export function AccountPageContent() {
           contact us via the email in the footer and we will remove it.
         </p>
       </div>
+
+      <SecuritySettings uid={user.uid} email={user.email ?? ''} />
     </div>
+    </LockGate>
   )
 }

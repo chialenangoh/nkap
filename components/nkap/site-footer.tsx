@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Coins, CirclePlay } from 'lucide-react'
 import { CORRIDORS } from '@/lib/nkap/rates'
 import { AFFILIATE_DISCLOSURE, EDUCATION_NOTICE, SITE } from '@/lib/nkap/site'
+import { BottomNav } from './bottom-nav'
 
 /**
  * Footer carries the compliance lines that must appear on every page:
@@ -9,6 +10,7 @@ import { AFFILIATE_DISCLOSURE, EDUCATION_NOTICE, SITE } from '@/lib/nkap/site'
  */
 export function SiteFooter() {
   return (
+    <>
     <footer className="border-t border-border bg-card">
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <div className="grid gap-8 md:grid-cols-[1.2fr_1fr_1fr]">
@@ -100,5 +102,7 @@ export function SiteFooter() {
         </div>
       </div>
     </footer>
+    <BottomNav />
+    </>
   )
 }
