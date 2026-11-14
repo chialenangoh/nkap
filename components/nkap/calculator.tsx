@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { ArrowRight, ArrowUpDown, BadgeCheck, Copy, FlaskConical, Info, Trophy } from 'lucide-react'
 import {
   CORRIDORS,
@@ -20,6 +20,8 @@ import {
 import { RateAlertSignup } from '@/components/nkap/rate-alert-signup'
 import { ShareButtons } from '@/components/nkap/share-buttons'
 import { trackProviderClick } from '@/lib/nkap/analytics'
+import { useAuth } from '@/lib/nkap/auth-context'
+import { recordActivity } from '@/lib/nkap/activity'
 import { cn } from '@/lib/utils'
 
 const QUICK_AMOUNTS = [100, 200, 500, 1000]
@@ -64,6 +66,43 @@ export function Calculator({
     ? Date.now() - new Date(`${verifiedDate}T12:00:00Z`).getTime() >
       7 * 24 * 60 * 60 * 1000
     : false
+  // On-device activity log (see lib/nkap/activity.ts): checks and provider
+  // visits, per user or guest, never uploaded.
+  const { user } = useAuth()
+  const owner = user?.uid ?? 'guest'
+  const recordVisit = (
+    providerName: string,
+    receiverGets?: number,
+    ratePerUsd?: number,
+  ) =>
+    recordActivity(owner, {
+      type: 'visit',
+      corridorSlug: corridor.slug,
+      country: corridor.country,
+      currencyCode: corridor.currencyCode,
+      amountUsd: amount,
+      providerName,
+      receiverGets,
+      ratePerUsd,
+    })
+
+  useEffect(() => {
+    if (amount <= 0 || !best) return
+    const t = setTimeout(() => {
+      recordActivity(owner, {
+        type: 'check',
+        corridorSlug: corridor.slug,
+        country: corridor.country,
+        currencyCode: corridor.currencyCode,
+        amountUsd: amount,
+        providerName: best.provider.name,
+        receiverGets: best.receiverGets,
+        ratePerUsd: best.quote.ratePerUsd,
+      })
+    }, 1500)
+    return () => clearTimeout(t)
+  }, [owner, corridor, amount, best])
+
   const shareUrl = `https://freenkap.com/send-money-to-${corridor.slug}`
   const shareText = best
     ? `Sending ${formatUsd(amount)} to ${corridor.country}? The best verified service delivers ${formatLocal(best.receiverGets, corridor.currencyCode)}. Compare what your family actually receives:`
@@ -191,9 +230,14 @@ export function Calculator({
                   href={best.provider.href}
                   target="_blank"
                   rel="noreferrer"
-                  onClick={() =>
+                  onClick={() => {
                     trackProviderClick(best.provider.id, corridor.slug)
-                  }
+                    recordVisit(
+                      best.provider.name,
+                      best.receiverGets,
+                      best.quote.ratePerUsd,
+                    )
+                  }}
                   className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 font-heading text-base font-bold text-primary-foreground shadow-lg transition-opacity hover:opacity-90"
                 >
                   Send with {best.provider.name}
@@ -285,6 +329,7 @@ export function Calculator({
                     row={row}
                     isBest={i === 0}
                     corridor={corridor}
+                    onVisit={recordVisit}
                   />
                 ))}
                 {seedRows.length > 0 && (
@@ -304,6 +349,7 @@ export function Calculator({
                     row={row}
                     isBest={false}
                     corridor={corridor}
+                    onVisit={recordVisit}
                   />
                 ))}
                 {unavailable.map(({ provider, quote }) => (
@@ -312,6 +358,7 @@ export function Calculator({
                     provider={provider}
                     quote={quote}
                     corridor={corridor}
+                    onVisit={recordVisit}
                   />
                 ))}
               </tbody>
@@ -353,10 +400,16 @@ function ResultRow({
   row,
   isBest,
   corridor,
+  onVisit,
 }: {
   row: ComparisonRow
   isBest: boolean
   corridor: ReturnType<typeof getCorridor>
+  onVisit: (
+    providerName: string,
+    receiverGets?: number,
+    ratePerUsd?: number,
+  ) => void
 }) {
   const [copied, setCopied] = useState(false)
   const { provider, quote } = row
@@ -456,7 +509,10 @@ function ResultRow({
             href={provider.href}
             target="_blank"
             rel="noreferrer"
-            onClick={() => trackProviderClick(provider.id, corridor.slug)}
+            onClick={() => {
+              trackProviderClick(provider.id, corridor.slug)
+              onVisit(provider.name, row.receiverGets, quote.ratePerUsd)
+            }}
             className="inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90"
           >
             Visit <ArrowRight className="h-3.5 w-3.5" />
@@ -500,10 +556,12 @@ function UnavailableRow({
   provider,
   quote,
   corridor,
+  onVisit,
 }: {
   provider: Provider
   quote: UnavailableQuote
   corridor: ReturnType<typeof getCorridor>
+  onVisit: (providerName: string) => void
 }) {
   return (
     <tr className="border-b border-border align-top opacity-75">
@@ -527,7 +585,10 @@ function UnavailableRow({
           href={provider.href}
           target="_blank"
           rel="noreferrer"
-          onClick={() => trackProviderClick(provider.id, corridor.slug)}
+          onClick={() => {
+            trackProviderClick(provider.id, corridor.slug)
+            onVisit(provider.name)
+          }}
           className="inline-flex items-center gap-1 rounded-lg border border-border px-3 py-2 text-xs font-semibold text-foreground transition-colors hover:border-primary"
         >
           Visit <ArrowRight className="h-3.5 w-3.5" />

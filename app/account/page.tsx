@@ -14,12 +14,9 @@ export default function AccountPage() {
     <div className="min-h-svh bg-background">
       <SiteHeader />
       <main className="mx-auto w-full max-w-2xl px-4 py-12 sm:px-6">
-        <h1 className="font-heading text-3xl font-bold tracking-tight text-foreground">
-          My account
+        <h1 className="mb-6 font-heading text-3xl font-bold tracking-tight text-foreground">
+          Settings
         </h1>
-        <p className="mb-8 mt-2 text-sm leading-relaxed text-muted-foreground">
-          Your sign-in details and account actions, all in one place.
-        </p>
         <AccountPageContent />
       </main>
       <SiteFooter />

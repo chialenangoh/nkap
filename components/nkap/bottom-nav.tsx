@@ -2,22 +2,22 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Gift, Headphones, Home, Scale, Settings } from 'lucide-react'
+import { ArrowLeftRight, Gift, Headphones, Home, Settings } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const ITEMS = [
   { href: '/', label: 'Home', icon: Home, match: '/' },
-  { href: '/#compare', label: 'Compare', icon: Scale, match: null },
-  { href: '/#rewards', label: 'Rewards', icon: Gift, match: null },
-  { href: '/how-it-works', label: 'Support', icon: Headphones, match: '/how-it-works' },
+  { href: '/activity', label: 'Activity', icon: ArrowLeftRight, match: '/activity' },
+  { href: '/rewards', label: 'Rewards', icon: Gift, match: '/rewards' },
+  { href: '/support', label: 'Support', icon: Headphones, match: '/support' },
   { href: '/account', label: 'Settings', icon: Settings, match: '/account' },
 ] as const
 
 /**
- * Mobile bottom tab bar, modelled on the reference app (Home · Compare ·
- * Rewards · Support · Settings). Every tab goes somewhere real: Support
- * opens How Nkap works, Settings opens the account page. Desktop keeps
- * the top navigation, so this renders on small screens only.
+ * Mobile bottom tab bar, modelled on the reference app (Home · Activity ·
+ * Rewards · Support · Settings) — each tab is a real page. Support opens
+ * Help and Support; Settings opens the account page. Desktop keeps the
+ * top navigation, so this renders on small screens only.
  */
 export function BottomNav() {
   const pathname = usePathname()

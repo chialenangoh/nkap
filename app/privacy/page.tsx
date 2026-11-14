@@ -83,6 +83,16 @@ export default function PrivacyPolicyPage() {
               clears it. You can ask us to delete your account and its email
               address at any time via the contact email in the footer.
             </p>
+            <p>
+              Two optional features keep data only on your own device, in
+              your browser’s local storage, and never send it to us: the
+              Activity history (the comparisons you ran and the provider
+              sites you visited, which you can clear or download anytime
+              from the Activity page), and the device lock (a PIN is stored
+              only as a scrambled hash; Face ID and fingerprint checks
+              happen inside your device and are never seen or stored by
+              Nkap).
+            </p>
           </Section>
 
           <Section title="Links to transfer providers">

@@ -54,7 +54,7 @@ export function WelcomeBar() {
         </p>
       </div>
       <Link
-        href="/#rewards"
+        href="/rewards"
         className="flex shrink-0 items-center gap-1.5 rounded-full bg-card px-3.5 py-2 text-sm font-semibold text-primary shadow-md transition-shadow hover:shadow-lg"
       >
         <Gift className="h-4 w-4" />
