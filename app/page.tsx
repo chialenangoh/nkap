@@ -28,10 +28,7 @@ export default function HomePage() {
         {/* Hero + calculator */}
         <section className="mx-auto max-w-6xl px-4 pb-14 pt-12 sm:px-6 sm:pt-16">
           <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-widest text-primary">
-              From the {SITE.channelName} channel
-            </p>
-            <h1 className="mt-3 font-heading text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl">
+            <h1 className="font-heading text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl">
               Sending money home?
               <br />
               Check what they’ll{' '}
