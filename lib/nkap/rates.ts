@@ -27,6 +27,15 @@
  *   only first-transfer / intro promo rates (Sendwave at $100 only, its
  *   calculator breaking at $1,000) — not standard comparable quotes — so
  *   they stay seed.
+ * - LIVE RE-VERIFICATION 2026-11-19: every corridor's mid-market reference and
+ *   every Remitly, Wise and Xe quote was re-checked on the provider's own
+ *   pages and updated with checkedDate 2026-11-19; each entry's note records
+ *   the exact page and quote. Remitly's Nigeria and Kenya headline promo
+ *   rates this time matched their calculators' welcome rates. Western Union
+ *   still exposes only first-transfer offers; WorldRemit's Nigeria quote is
+ *   explicitly a first-transfer rate and its other corridors do not confirm
+ *   standard vs enhanced rate; Sendwave's web calculator returned no figure
+ *   for any corridor — all three stay seed.
  * - STILL SEED after the 2026-11-13 pass: Western Union and WorldRemit on all
  *   corridors and Sendwave everywhere (their public pages render rates only
  *   via JavaScript calculators that return no figures, or expose only
@@ -115,10 +124,10 @@ export const CORRIDORS: Corridor[] = [
     currencyCode: 'XAF',
     currencyName: 'Central African CFA francs',
     flag: '🇨🇲',
-    // Xe currency converter, 2026-11-16 14:37 UTC: 1 USD = 595.629 XAF.
-    midMarketRate: 595.629,
+    // Xe currency converter, live 2026-11-19 ~14:40 UTC: 1 USD = 596.4246 XAF.
+    midMarketRate: 596.4246,
     midMarketStatus: 'verified',
-    midMarketCheckedDate: '2026-11-16',
+    midMarketCheckedDate: '2026-11-19',
     payoutNotes:
       'Most families receive on MTN Mobile Money or Orange Money, with bank deposit and cash pickup also widely available.',
     localContext:
@@ -130,11 +139,11 @@ export const CORRIDORS: Corridor[] = [
     currencyCode: 'NGN',
     currencyName: 'Nigerian naira',
     flag: '🇳🇬',
-    // Wise currency converter, live 2026-11-16: 1 USD = 1,417.00 NGN.
+    // Wise currency converter, live 2026-11-19: 1 USD = 1,443.81 NGN.
     // (Xe's converter read 1,344.4 on 2026-11-13 — see header note.)
-    midMarketRate: 1417,
+    midMarketRate: 1443.81,
     midMarketStatus: 'verified',
-    midMarketCheckedDate: '2026-11-16',
+    midMarketCheckedDate: '2026-11-19',
     payoutNotes:
       'Bank transfer is the standard payout in Nigeria, with cash pickup available at agent locations in most cities.',
     localContext:
@@ -146,10 +155,10 @@ export const CORRIDORS: Corridor[] = [
     currencyCode: 'GHS',
     currencyName: 'Ghanaian cedis',
     flag: '🇬🇭',
-    // Xe currency converter, 2026-11-16 14:37 UTC: 1 USD = 11.7252 GHS.
-    midMarketRate: 11.7252,
+    // Xe currency converter, live 2026-11-19 ~14:40 UTC: 1 USD = 11.7639 GHS.
+    midMarketRate: 11.7639,
     midMarketStatus: 'verified',
-    midMarketCheckedDate: '2026-11-16',
+    midMarketCheckedDate: '2026-11-19',
     payoutNotes:
       'MTN Mobile Money is the everyday payout rail in Ghana, alongside bank deposit and cash pickup.',
     localContext:
@@ -161,10 +170,10 @@ export const CORRIDORS: Corridor[] = [
     currencyCode: 'KES',
     currencyName: 'Kenyan shillings',
     flag: '🇰🇪',
-    // Xe currency converter, 2026-11-16 14:37 UTC: 1 USD = 130.019 KES.
-    midMarketRate: 130.019,
+    // Xe currency converter, live 2026-11-19 ~14:40 UTC: 1 USD = 130.0358 KES.
+    midMarketRate: 130.0358,
     midMarketStatus: 'verified',
-    midMarketCheckedDate: '2026-11-16',
+    midMarketCheckedDate: '2026-11-19',
     payoutNotes:
       'M-PESA is the default payout in Kenya — fast, everywhere, and usually the cheapest rail to receive on.',
     localContext:
@@ -176,6 +185,7 @@ const EP2_SOURCE =
   'Money in America Ep. 2 rate set, re-verified 2026-11-05 from the provider’s own page'
 const NOV13_SOURCE = 'Live re-verification 2026-11-13 from the provider’s own page'
 const NOV16_SOURCE = 'Live re-verification 2026-11-16 from the provider’s own page'
+const NOV19_SOURCE = 'Live re-verification 2026-11-19 from the provider’s own page'
 const SEED_SOURCE = 'Seed estimate — pending re-verification on the provider’s own page'
 
 export const PROVIDERS: Provider[] = [
@@ -194,50 +204,50 @@ export const PROVIDERS: Provider[] = [
       cameroon: {
         feeUsd: 0,
         feePct: 0,
-        ratePerUsd: 583.19,
-        promoRatePerUsd: 599.78,
+        ratePerUsd: 584.43,
+        promoRatePerUsd: 596.26,
         promoAppliesToFirstUsd: 500,
         promoNote:
-          'Welcome rate 599.78 XAF per $1 — new customers only, first $500 only. Standard rate shown in the ranking.',
+          'Welcome rate 596.26 XAF per $1 — new customers only, first $500 only. Standard rate shown in the ranking.',
         status: 'verified',
-        checkedDate: '2026-11-16',
-        source: NOV16_SOURCE,
-        note: 'Remitly’s own Cameroon pricing page (live 2026-11-16, remitly.com/us/en/cameroon/pricing) confirms zero fees on USD→XAF, the 599.78 welcome rate on the first $500 and the 583.19 standard rate on the rest ($1,000 send → 591,485 XAF).',
+        checkedDate: '2026-11-19',
+        source: NOV19_SOURCE,
+        note: 'Remitly’s own Cameroon pricing page (live 2026-11-19, remitly.com/us/en/cameroon/pricing) confirms zero fees on USD→XAF, the 596.26 welcome rate on the first $500 and the 584.43 standard rate on the rest ($1,000 send → 590,345 XAF).',
       },
       nigeria: {
         feeUsd: 0,
         feePct: 0,
-        ratePerUsd: 1377.33,
-        promoRatePerUsd: 1427.97,
+        ratePerUsd: 1423.83,
+        promoRatePerUsd: 1516.55,
         promoAppliesToFirstUsd: 500,
         promoNote:
-          'Welcome rate 1,427.97 NGN per $1 — new customers only, first $500 only. Standard rate shown in the ranking.',
+          'Welcome rate 1,516.55 NGN per $1 — new customers only, first $500 only. Standard rate shown in the ranking.',
         status: 'verified',
-        checkedDate: '2026-11-16',
-        source: NOV16_SOURCE,
-        note: 'Remitly’s own USD→NGN converter page (live 2026-11-16, remitly.com/us/en/currency-converter/usd-to-ngn-rate): calculator at $1,000 uses welcome 1,427.97 NGN per $1 on the first $500 and standard 1,377.33 on the rest ($1,000 → 1,402,650 NGN), zero fees. The same page’s headline promo rate read 1,447.56 — the calculator figures are recorded as the operative quote.',
+        checkedDate: '2026-11-19',
+        source: NOV19_SOURCE,
+        note: 'Remitly’s own USD→NGN converter page (live 2026-11-19, remitly.com/us/en/currency-converter/usd-to-ngn-rate): calculator at $1,000 uses welcome 1,516.55 NGN per $1 on the first $500 and standard 1,423.83 on the rest ($1,000 → 1,470,190 NGN), zero fees. The page’s headline promo rate also read 1,516.55, matching the calculator.',
       },
       ghana: {
         feeUsd: 0,
         feePct: 0,
-        ratePerUsd: 11.5756,
+        ratePerUsd: 11.6052,
         status: 'verified',
-        checkedDate: '2026-11-16',
-        source: NOV16_SOURCE,
-        note: '“Everyday rate” 11.5756 GHS per $1 with zero fees, from Remitly’s own USD→GHS converter page (live 2026-11-16, remitly.com/us/en/currency-converter/usd-to-ghs-rate; $1,000 send → 11,575.60 GHS). Ghana shows a single everyday rate rather than a welcome/standard split, so no promo rate is shown.',
+        checkedDate: '2026-11-19',
+        source: NOV19_SOURCE,
+        note: '“Everyday rate” 11.6052 GHS per $1 with zero fees, from Remitly’s own USD→GHS converter page (live 2026-11-19, remitly.com/us/en/currency-converter/usd-to-ghs-rate; $1,000 send → 11,605.20 GHS). Ghana shows a single everyday rate rather than a welcome/standard split, so no promo rate is shown. The calculator also showed a −$10.00 discount (total to pay $990.00 on a $1,000 send); the rate and fee recorded are the everyday figures.',
       },
       kenya: {
         feeUsd: 0,
         feePct: 0,
-        ratePerUsd: 128.06,
-        promoRatePerUsd: 135.97,
+        ratePerUsd: 128.13,
+        promoRatePerUsd: 132.29,
         promoAppliesToFirstUsd: 500,
         promoNote:
-          'Welcome rate 135.97 KES per $1 — new customers only, first $500 only. Standard rate shown in the ranking.',
+          'Welcome rate 132.29 KES per $1 — new customers only, first $500 only. Standard rate shown in the ranking.',
         status: 'verified',
-        checkedDate: '2026-11-16',
-        source: NOV16_SOURCE,
-        note: 'Remitly’s own USD→KES converter page (live 2026-11-16, remitly.com/us/en/currency-converter/usd-to-kes-rate): calculator at $1,000 uses welcome 135.97 KES per $1 on the first $500 and standard 128.06 on the rest ($1,000 → 132,015 KES), zero fees. The same page’s headline promo rate read 136.84 — the calculator figures are recorded as the operative quote.',
+        checkedDate: '2026-11-19',
+        source: NOV19_SOURCE,
+        note: 'Remitly’s own USD→KES converter page (live 2026-11-19, remitly.com/us/en/currency-converter/usd-to-kes-rate): calculator at $1,000 uses welcome 132.29 KES per $1 on the first $500 and standard 128.13 on the rest ($1,000 → 130,210 KES), zero fees. The page’s headline promo rate also read 132.29, matching the calculator.',
       },
     },
   },
@@ -250,35 +260,35 @@ export const PROVIDERS: Provider[] = [
     quotes: {
       cameroon: {
         status: 'unavailable',
-        source: 'Wise’s own send-money-to-Cameroon page, checked 2026-11-16',
+        source: 'Wise’s own send-money-to-Cameroon page, checked 2026-11-19',
         note: 'Wise doesn’t offer sends to Cameroon yet — its own page says this corridor is “not quite there yet”, so there is no Wise rate to quote.',
       },
       nigeria: {
         feeUsd: 1.8,
         feePct: 0.0052,
-        ratePerUsd: 1417,
+        ratePerUsd: 1443.81,
         status: 'verified',
-        checkedDate: '2026-11-16',
-        source: NOV16_SOURCE,
-        note: 'Wise’s own compare page (live 2026-11-16, wise.com/us/compare/?sendAmount=500&sourceCurrency=USD&targetCurrency=NGN): $500 send → rate 1,417.00, total fees $4.40, recipient gets 702,265.20 NGN. Fee modeled as $1.80 + 0.52%, which reproduces the $500 fee exactly. Wise deducts its fee from the amount sent before converting, so Wise’s own page shows the smaller recipient figure quoted above; Nkap’s table instead converts the full amount you enter and counts the fee in the Total cost column — one convention for every provider, so all services compare on an equal basis. That is why the table’s Wise figure is higher than the one on Wise’s page.',
+        checkedDate: '2026-11-19',
+        source: NOV19_SOURCE,
+        note: 'Wise’s own compare page (live 2026-11-19, wise.com/us/compare/?sendAmount=500&sourceCurrency=USD&targetCurrency=NGN): $500 send → rate 1,443.81, total fees $4.40, recipient gets 715,552.24 NGN. Fee modeled as $1.80 + 0.52%, which reproduces the $500 fee exactly. Wise deducts its fee from the amount sent before converting, so Wise’s own page shows the smaller recipient figure quoted above; Nkap’s table instead converts the full amount you enter and counts the fee in the Total cost column — one convention for every provider, so all services compare on an equal basis. That is why the table’s Wise figure is higher than the one on Wise’s page.',
       },
       ghana: {
         feeUsd: 0,
-        feePct: 0.01378,
-        ratePerUsd: 11.72,
+        feePct: 0.01291,
+        ratePerUsd: 11.765,
         status: 'verified',
-        checkedDate: '2026-11-16',
-        source: NOV16_SOURCE,
-        note: 'Wise’s own compare page (live 2026-11-16, wise.com/us/compare/wise-usd-to-ghs): $1,000 send → rate 11.72, total fees $13.78, recipient gets 11,558.50 GHS. Fee modeled as 1.378% from that quote (Wise’s only published fee point for this corridor). Wise deducts its fee from the amount sent before converting, so Wise’s own page shows the smaller recipient figure quoted above; Nkap’s table instead converts the full amount you enter and counts the fee in the Total cost column — one convention for every provider, so all services compare on an equal basis. That is why the table’s Wise figure is higher than the one on Wise’s page.',
+        checkedDate: '2026-11-19',
+        source: NOV19_SOURCE,
+        note: 'Wise’s own compare page (live 2026-11-19, wise.com/us/compare/wise-usd-to-ghs): $1,000 send → rate 11.765, total fees $12.91, recipient gets 11,613.11 GHS. Fee modeled as 1.291% from that quote (Wise’s only published fee point for this corridor). Wise deducts its fee from the amount sent before converting, so Wise’s own page shows the smaller recipient figure quoted above; Nkap’s table instead converts the full amount you enter and counts the fee in the Total cost column — one convention for every provider, so all services compare on an equal basis. That is why the table’s Wise figure is higher than the one on Wise’s page.',
       },
       kenya: {
         feeUsd: 0,
         feePct: 0.01341,
         ratePerUsd: 130.05,
         status: 'verified',
-        checkedDate: '2026-11-16',
-        source: NOV16_SOURCE,
-        note: 'Wise’s own compare page (live 2026-11-16, wise.com/us/compare/western-union-usd-to-kes): $1,000 send → rate 130.05, total fees $13.41, recipient gets 128,306 KES. Fee modeled as 1.341% from that quote (Wise’s only published fee point for this corridor). Wise deducts its fee from the amount sent before converting, so Wise’s own page shows the smaller recipient figure quoted above; Nkap’s table instead converts the full amount you enter and counts the fee in the Total cost column — one convention for every provider, so all services compare on an equal basis. That is why the table’s Wise figure is higher than the one on Wise’s page.',
+        checkedDate: '2026-11-19',
+        source: NOV19_SOURCE,
+        note: 'Wise’s own compare page (live 2026-11-19, wise.com/us/compare/western-union-usd-to-kes): $1,000 send → rate 130.05, total fees $13.41, recipient gets 128,306 KES. Fee modeled as 1.341% from that quote (Wise’s only published fee point for this corridor). Wise deducts its fee from the amount sent before converting, so Wise’s own page shows the smaller recipient figure quoted above; Nkap’s table instead converts the full amount you enter and counts the fee in the Total cost column — one convention for every provider, so all services compare on an equal basis. That is why the table’s Wise figure is higher than the one on Wise’s page.',
       },
     },
   },
@@ -292,38 +302,38 @@ export const PROVIDERS: Provider[] = [
       cameroon: {
         feeUsd: 0,
         feePct: 0,
-        ratePerUsd: 591.0215,
+        ratePerUsd: 591.8272,
         status: 'verified',
-        checkedDate: '2026-11-16',
-        source: NOV16_SOURCE,
-        note: 'Quoted on a $1,000 transfer by bank transfer (Direct Debit / ACH): recipient gets 591,022 XAF, $0.00 additional fee (Xe’s own send-money calculator, live 2026-11-16).',
+        checkedDate: '2026-11-19',
+        source: NOV19_SOURCE,
+        note: 'Quoted on a $1,000 transfer by bank transfer (Direct Debit / ACH): recipient gets 591,827 XAF, $0.00 additional fee (Xe’s own send-money calculator, live 2026-11-19).',
       },
       nigeria: {
         feeUsd: 0,
         feePct: 0,
-        ratePerUsd: 1398.4601,
+        ratePerUsd: 1448.8996,
         status: 'verified',
-        checkedDate: '2026-11-16',
-        source: NOV16_SOURCE,
-        note: 'Quoted on a $1,000 transfer by bank transfer (Direct Debit / ACH): recipient gets 1,398,460.10 NGN, $0.00 additional fee (Xe’s own send-money calculator, live 2026-11-16).',
+        checkedDate: '2026-11-19',
+        source: NOV19_SOURCE,
+        note: 'Quoted on a $1,000 transfer by bank transfer (Direct Debit / ACH): recipient gets 1,448,899.60 NGN, $0.00 additional fee (Xe’s own send-money calculator, live 2026-11-19).',
       },
       ghana: {
         feeUsd: 0,
         feePct: 0,
-        ratePerUsd: 11.642,
+        ratePerUsd: 11.6817,
         status: 'verified',
-        checkedDate: '2026-11-16',
-        source: NOV16_SOURCE,
-        note: 'Quoted on a $1,000 transfer by bank transfer (Direct Debit / ACH): recipient gets 11,642.00 GHS, $0.00 additional fee (Xe’s own send-money calculator, live 2026-11-16).',
+        checkedDate: '2026-11-19',
+        source: NOV19_SOURCE,
+        note: 'Quoted on a $1,000 transfer by bank transfer (Direct Debit / ACH): recipient gets 11,681.70 GHS, $0.00 additional fee (Xe’s own send-money calculator, live 2026-11-19).',
       },
       kenya: {
         feeUsd: 0,
         feePct: 0,
-        ratePerUsd: 126.945,
+        ratePerUsd: 127.0141,
         status: 'verified',
-        checkedDate: '2026-11-16',
-        source: NOV16_SOURCE,
-        note: 'Quoted on a $1,000 transfer by bank transfer (Direct Debit / ACH): recipient gets 126,945 KES, $0.00 additional fee (Xe’s own send-money calculator, live 2026-11-16).',
+        checkedDate: '2026-11-19',
+        source: NOV19_SOURCE,
+        note: 'Quoted on a $1,000 transfer by bank transfer (Direct Debit / ACH): recipient gets 127,014.10 KES, $0.00 additional fee (Xe’s own send-money calculator, live 2026-11-19).',
       },
     },
   },
